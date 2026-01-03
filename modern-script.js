@@ -992,6 +992,13 @@ function initPreloader() {
       }, 500);
     }
   }, 30);
+
+  // Safety fallback: Force hide preloader after 5 seconds
+  setTimeout(() => {
+    if (!preloader.classList.contains('loaded')) {
+      preloader.classList.add('loaded');
+    }
+  }, 5000);
 }
 
 // Digital Decryption Effect for Stats
