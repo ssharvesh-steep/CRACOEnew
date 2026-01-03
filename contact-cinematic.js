@@ -8,13 +8,7 @@ import { initHolographicBackground } from './holographic-background.js';
 document.addEventListener('DOMContentLoaded', () => {
 
     // 1. Initialize Holographic Background
-    try {
-        console.log('Initializing Holographic Background...');
-        initHolographicBackground();
-        console.log('Holographic Background Initialized');
-    } catch (e) {
-        console.error('Failed to init holographic background:', e);
-    }
+    initHolographicBackground();
 
     // 2. GSAP Reveal Sequence
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
