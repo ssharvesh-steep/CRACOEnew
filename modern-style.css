@@ -2342,7 +2342,18 @@ button,
   display: flex;
   justify-content: center;
   align-items: center;
-  pointer-events: none;
+  pointer-events: all;
+  /* Initially block clicks */
+  animation: forceHidePreloader 0.5s forwards 8s;
+  /* Emergency Fallback */
+}
+
+@keyframes forceHidePreloader {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
 }
 
 .shutter {
