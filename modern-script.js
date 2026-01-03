@@ -961,45 +961,19 @@ if (ctaCard) {
 }
 
 // Cinematic Preloader
-function initPreloader() {
-  const preloader = document.querySelector('.preloader');
-  const counter = document.querySelector('.counter');
-  const progressFill = document.querySelector('.progress-fill');
-
-  if (!preloader) return;
-
-  let count = 0;
-  const interval = setInterval(() => {
-    count += Math.floor(Math.random() * 5) + 1;
-    if (count > 100) count = 100;
-
-    counter.textContent = count < 10 ? `0${count}` : count;
-    progressFill.style.width = `${count}%`;
-
-    if (count === 100) {
-      clearInterval(interval);
-      setTimeout(() => {
-        preloader.classList.add('loaded');
-        // Trigger hero reveal after preloader
-        gsap.from('.hero-title .title-line', {
-          y: 100,
-          opacity: 0,
-          duration: 1.2,
-          stagger: 0.2,
-          ease: 'power4.out',
-          delay: 0.5
-        });
-      }, 500);
-    }
-  }, 30);
-
-  // Safety fallback: Force hide preloader after 5 seconds
-  setTimeout(() => {
-    if (!preloader.classList.contains('loaded')) {
-      preloader.classList.add('loaded');
-    }
-  }, 5000);
+// Cinematic Preloader - REMOVED
+function initHeroReveal() {
+  // Trigger hero reveal immediately
+  gsap.from('.hero-title .title-line', {
+    y: 100,
+    opacity: 0,
+    duration: 1.2,
+    stagger: 0.2,
+    ease: 'power4.out',
+    delay: 0.5
+  });
 }
+
 
 // Digital Decryption Effect for Stats
 function decryptNumber(element, finalNumber) {
@@ -1045,7 +1019,7 @@ if (liquidFilter) {
 }
 
 // Initialize
-document.addEventListener('DOMContentLoaded', initPreloader);
+document.addEventListener('DOMContentLoaded', initHeroReveal);
 
 // Kinetic Void CTA Animation
 const kineticSection = document.querySelector('.cta-section.kinetic-void');
