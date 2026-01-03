@@ -1038,7 +1038,7 @@ if (liquidFilter) {
 }
 
 // Initialize
-window.addEventListener('load', initPreloader);
+document.addEventListener('DOMContentLoaded', initPreloader);
 
 // Kinetic Void CTA Animation
 const kineticSection = document.querySelector('.cta-section.kinetic-void');
