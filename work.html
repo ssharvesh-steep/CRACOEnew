@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work - CRACOE | Advanced Portfolio Showcase</title>
+  <link rel="icon" href="https://cracoe.com/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="https://cracoe.com/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="64x64" href="https://cracoe.com/favicon.png">
+
+  <!-- Essential Meta Tags -->
+  <meta name="description"
+    content="Explore CRACOE's portfolio of cutting-edge projects in AI, applications, and web development. See how we transform ideas into digital reality." />
+  <meta name="keywords"
+    content="CRACOE portfolio, IT projects, AI case studies, web development work, app development portfolio, software engineering projects" />
+  <meta name="author" content="CRACOE" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://cracoe.com/work.html" />
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Work - CRACOE | Advanced Portfolio Showcase" />
+  <meta property="og:description"
+    content="Explore CRACOE's portfolio of cutting-edge projects in AI, applications, and web development." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://cracoe.com/work.html" />
+  <meta property="og:image" content="https://cracoe.com/fav.png" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Work - CRACOE | Advanced Portfolio Showcase" />
+  <meta name="twitter:description"
+    content="Explore CRACOE's portfolio of cutting-edge projects in AI, applications, and web development." />
+  <meta name="twitter:image" content="https://cracoe.com/fav.png" />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "CRACOE Portfolio",
+    "description": "Showcase of CRACOE's projects in AI, Web, and App Development",
+    "url": "https://cracoe.com/work.html",
+    "publisher": {
+      "@type": "Organization",
+      "name": "CRACOE",
+      "logo": "https://cracoe.com/fav.png"
+    }
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Styles -->
+
+  <!-- Essential Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script type="module" crossorigin src="/assets/work-59MN05Yo.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/index-B7mLf6tE.js">
+  <link rel="modulepreload" crossorigin href="/assets/ScrollTrigger-BWsqEc1I.js">
+  <link rel="stylesheet" crossorigin href="/assets/work-CXIoU35q.css">
+</head>
+
+<body>
+  <!-- Custom Cursor -->
+  <div class="custom-cursor">
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+  </div>
+
+  <!-- Particle Canvas -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- Scroll Progress -->
+  <div class="scroll-progress"></div>
+
+  <!-- Top Bar -->
+  <div id="lux-topbar" class="fixed top-0 left-0 w-full z-50 backdrop-blur h-14 flex items-center px-8 justify-between">
+    <div class="flex items-center gap-3">
+      <span class="inline-block w-3 h-3 rounded-sm bg-white mr-2"></span>
+      <span id="lux-time" class="font-mono text-xs tracking-widest text-white hidden md:inline">INR 00:00:00 GMT
+        +5:30</span>
+    </div>
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+      <a href="index.html" class="text-white text-lg md:text-2xl font-light tracking-widest"
+        style="font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.15em;">CRACOE</a>
+    </div>
+    <div class="ml-auto">
+      <span id="menu-toggle"
+        class="uppercase text-white text-sm tracking-widest font-semibold cursor-pointer">MENU</span>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero-work">
+    <div class="hero-bg-gradient"></div>
+    <div class="hero-content">
+      <div class="hero-label">
+        <span class="status-pulse"></span>
+        <span>PORTFOLIO SHOWCASE</span>
+      </div>
+      <h1 class="hero-title">
+        <span class="title-line">Our</span>
+        <span class="title-line gradient-text">Creative</span>
+        <span class="title-line">Work</span>
+      </h1>
+      <p class="hero-subtitle">Transforming ideas into exceptional digital experiences</p>
+    </div>
+  </section>
+
+  <!-- Filter Section -->
+  <section class="filter-section">
+    <div class="filter-container">
+      <button class="filter-btn active" data-filter="all">
+        <span class="filter-icon">●</span>
+        <span>All Work</span>
+      </button>
+      <button class="filter-btn" data-filter="app">
+        <span class="filter-icon">●</span>
+        <span>Applications</span>
+      </button>
+      <button class="filter-btn" data-filter="ai">
+        <span class="filter-icon">●</span>
+        <span>AI Solutions</span>
+      </button>
+      <button class="filter-btn" data-filter="web">
+        <span class="filter-icon">●</span>
+        <span>Websites</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Projects Bento Grid -->
+  <section class="projects-section">
+    <div class="bento-grid">
+
+      <!-- Project 1: Application (Large) -->
+      <article class="project-card large" data-category="app">
+        <div class="card-glow"></div>
+        <div class="card-image-wrapper">
+          <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=1974&auto=format&fit=crop"
+            alt="Application Development" class="card-image">
+          <div class="card-overlay"></div>
+        </div>
+        <div class="card-content">
+          <div class="card-meta">
+            <span class="meta-category">Mobile & Desktop</span>
+            <span class="meta-id">#APP-01</span>
+          </div>
+          <h3 class="card-title">Application Development</h3>
+          <p class="card-description">Cross-platform solutions with native performance and seamless user experiences</p>
+          <div class="card-tags">
+            <span class="tag">React Native</span>
+            <span class="tag">Flutter</span>
+            <span class="tag">Swift</span>
+          </div>
+          <a href="#" class="card-link">
+            <span>View Project</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M4 10h12m0 0l-6-6m6 6l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Project 2: Medical AI -->
+      <article class="project-card" data-category="ai">
+        <div class="card-glow"></div>
+        <div class="card-image-wrapper">
+          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=2070&auto=format&fit=crop"
+            alt="Medical AI" class="card-image">
+          <div class="card-overlay"></div>
+        </div>
+        <div class="card-content">
+          <div class="card-meta">
+            <span class="meta-category">Healthcare Intelligence</span>
+            <span class="meta-id">#MED-AI</span>
+          </div>
+          <h3 class="card-title">Medical AI</h3>
+          <p class="card-description">AI-powered diagnostic tools revolutionizing healthcare</p>
+          <div class="card-tags">
+            <span class="tag">TensorFlow</span>
+            <span class="tag">Computer Vision</span>
+          </div>
+          <a href="#" class="card-link">
+            <span>View Project</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M4 10h12m0 0l-6-6m6 6l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Project 3: Health AI -->
+      <article class="project-card" data-category="ai">
+        <div class="card-glow"></div>
+        <div class="card-image-wrapper">
+          <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&w=2070&auto=format&fit=crop"
+            alt="Health AI" class="card-image">
+          <div class="card-overlay"></div>
+        </div>
+        <div class="card-content">
+          <div class="card-meta">
+            <span class="meta-category">Wellness Algorithms</span>
+            <span class="meta-id">#HLTH-AI</span>
+          </div>
+          <h3 class="card-title">Health AI</h3>
+          <p class="card-description">Personalized wellness recommendations powered by machine learning</p>
+          <div class="card-tags">
+            <span class="tag">ML</span>
+            <span class="tag">Analytics</span>
+          </div>
+          <a href="#" class="card-link">
+            <span>View Project</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M4 10h12m0 0l-6-6m6 6l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Project 4: Websites (Wide) -->
+      <article class="project-card wide" data-category="web">
+        <div class="card-glow"></div>
+        <div class="card-image-wrapper">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop"
+            alt="Websites" class="card-image">
+          <div class="card-overlay"></div>
+        </div>
+        <div class="card-content">
+          <div class="card-meta">
+            <span class="meta-category">Web Experiences</span>
+            <span class="meta-id">#WEB-01</span>
+          </div>
+          <h3 class="card-title">Modern Websites</h3>
+          <p class="card-description">Stunning, performant web experiences that convert and engage</p>
+          <div class="card-tags">
+            <span class="tag">Next.js</span>
+            <span class="tag">React</span>
+            <span class="tag">WebGL</span>
+          </div>
+          <a href="#" class="card-link">
+            <span>View Project</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M4 10h12m0 0l-6-6m6 6l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-work">
+    <div class="cta-content">
+      <h2 class="cta-title">Ready to start your project?</h2>
+      <p class="cta-subtitle">Let's create something extraordinary together</p>
+      <a href="contact.html" class="cta-button">
+        <span>Get in Touch</span>
+        <div class="button-glow"></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Cinematic Menu Overlay -->
+  <div id="menu-overlay"
+    style="position: fixed; top: 0; right: 0; width: 100vw; height: 100vh; z-index: 1000; display: none; font-family: 'Italiana', serif; overflow: hidden; background-color: #0b0b0b;">
+
+    <!-- Editorial Background -->
+    <div class="menu-bg-noise"
+      style="position: absolute; inset: 0; opacity: 0.03; background-image: url('data:image/svg+xml,%3Csvg viewBox=&quot;0 0 200 200&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cfilter id=&quot;noiseFilter&quot;%3E%3CfeTurbulence type=&quot;fractalNoise&quot; baseFrequency=&quot;0.8&quot; numOctaves=&quot;3&quot; stitchTiles=&quot;stitch&quot;/%3E%3C/filter%3E%3Crect width=&quot;100%&quot; height=&quot;100%&quot; filter=&quot;url(%23noiseFilter)&quot;/%3E%3C/svg%3E'); pointer-events: none;">
+    </div>
+
+    <!-- Subtle Gradient Spot -->
+    <div
+      style="position: absolute; top: -20%; right: -10%; width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%); border-radius: 50%; pointer-events: none; filter: blur(80px);">
+    </div>
+
+    <!-- Load Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Italiana&display=swap" rel="stylesheet">
+
+    <style>
+      /* Editorial Menu Animations */
+      #menu-overlay.entering {
+        animation: menuFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      #menu-overlay.exiting {
+        animation: menuFadeOut 0.6s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+      }
+
+      @keyframes menuFadeIn {
+        from {
+          opacity: 0;
+        }
+
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes menuFadeOut {
+        from {
+          opacity: 1;
+        }
+
+        to {
+          opacity: 0;
+        }
+      }
+
+      /* Line Animation */
+      .editorial-line {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background-color: rgba(255, 255, 255, 0.2);
+        transform-origin: left;
+        transition: background-color 0.4s ease;
+      }
+
+      .editorial-line::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #ffffff;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+      }
+
+      .menu-item-container:hover .editorial-line::after {
+        transform: scaleX(1);
+      }
+
+      .menu-item-container:hover .editorial-line {
+        background-color: rgba(255, 255, 255, 0.4);
+      }
+
+      /* Text Hover */
+      .editorial-text {
+        transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.4s ease;
+        opacity: 0.7;
+      }
+
+      .menu-item-container:hover .editorial-text {
+        transform: translateX(20px);
+        opacity: 1;
+      }
+
+      /* Number Styling */
+      .editorial-number {
+        font-family: 'Inter', sans-serif;
+        font-size: 14px;
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.4);
+        margin-right: 20px;
+        transition: color 0.4s ease;
+      }
+
+      .menu-item-container:hover .editorial-number {
+        color: #ffffff;
+      }
+    </style>
+
+    <!-- Desktop Menu (769px and above) -->
+    <div class="desktop-menu" style="display: none; position: relative; z-index: 10; height: 100%; width: 100%;">
+      <div style="position: absolute; top: 40px; right: 60px; z-index: 50; cursor: pointer;">
+        <span id="menuClose"
+          style="text-transform: uppercase; color: #ffffff; font-size: 12px; letter-spacing: 0.1em; font-family: 'Inter', sans-serif; opacity: 0.7; transition: opacity 0.3s ease;">Close</span>
+      </div>
+
+      <div style="display: flex; align-items: center; justify-content: center; height: 100vh; width: 100%;">
+        <nav id="animated-nav" style="display: flex; flex-direction: column; width: 60%; max-width: 800px;">
+
+          <!-- Item 01 -->
+          <a href="index.html" class="menu-item-container"
+            style="text-decoration: none; position: relative; padding: 30px 0; display: flex; align-items: baseline;">
+            <span class="editorial-number">01</span>
+            <span class="editorial-text"
+              style="color: #ffffff; font-size: 64px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.02em;">Home</span>
+            <div class="editorial-line"></div>
+          </a>
+
+          <!-- Item 02 -->
+          <a href="services.html" class="menu-item-container"
+            style="text-decoration: none; position: relative; padding: 30px 0; display: flex; align-items: baseline;">
+            <span class="editorial-number">02</span>
+            <span class="editorial-text"
+              style="color: #ffffff; font-size: 64px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.02em;">Services</span>
+            <div class="editorial-line"></div>
+          </a>
+
+          <!-- Item 03 -->
+          <a href="our-team.html" class="menu-item-container"
+            style="text-decoration: none; position: relative; padding: 30px 0; display: flex; align-items: baseline;">
+            <span class="editorial-number">03</span>
+            <span class="editorial-text"
+              style="color: #ffffff; font-size: 64px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.02em;">Team</span>
+            <div class="editorial-line"></div>
+          </a>
+
+          <!-- Item 04 -->
+          <a href="work.html" class="menu-item-container"
+            style="text-decoration: none; position: relative; padding: 30px 0; display: flex; align-items: baseline;">
+            <span class="editorial-number">04</span>
+            <span class="editorial-text"
+              style="color: #ffffff; font-size: 64px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.02em;">Work</span>
+            <div class="editorial-line"></div>
+          </a>
+
+          <!-- Item 05 -->
+          <a href="contact.html" class="menu-item-container"
+            style="text-decoration: none; position: relative; padding: 30px 0; display: flex; align-items: baseline;">
+            <span class="editorial-number">05</span>
+            <span class="editorial-text"
+              style="color: #ffffff; font-size: 64px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.02em;">Contact</span>
+            <div class="editorial-line"></div>
+          </a>
+
+        </nav>
+      </div>
+    </div>
+
+    <!-- Mobile Menu (768px and below) -->
+    <div class="mobile-menu"
+      style="display: none; font-family: 'Italiana', serif; position: relative; z-index: 10; height: 100%; width: 100%;">
+      <div style="position: absolute; top: 30px; right: 30px; z-index: 50;">
+        <span class="menu-close-mobile"
+          style="text-transform: uppercase; color: #ffffff; font-size: 12px; letter-spacing: 0.1em; font-family: 'Inter', sans-serif; cursor: pointer;">Close</span>
+      </div>
+      <div
+        style="display: flex; align-items: center; justify-content: center; height: 100vh; width: 100%; padding: 0 30px;">
+        <nav id="mobile-animated-nav" style="display: flex; flex-direction: column; width: 100%;">
+
+          <a href="index.html" class="menu-item-container"
+            style="text-decoration: none; position: relative; padding: 25px 0; display: flex; align-items: baseline;">
+            <span class="editorial-number" style="font-size: 12px; margin-right: 15px;">01</span>
+            <span class="editorial-text"
+              style="color: #ffffff; font-size: 42px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.02em;">Home</span>
+            <div class="editorial-line"></div>
+          </a>
+
+          <a href="services.html" class="menu-item-container"
+            style="text-decoration: none; position: relative; padding: 25px 0; display: flex; align-items: baseline;">
+            <span class="editorial-number" style="font-size: 12px; margin-right: 15px;">02</span>
+            <span class="editorial-text"
+              style="color: #ffffff; font-size: 42px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.02em;">Services</span>
+            <div class="editorial-line"></div>
+          </a>
+
+          <a href="our-team.html" class="menu-item-container"
+            style="text-decoration: none; position: relative; padding: 25px 0; display: flex; align-items: baseline;">
+            <span class="editorial-number" style="font-size: 12px; margin-right: 15px;">03</span>
+            <span class="editorial-text"
+              style="color: #ffffff; font-size: 42px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.02em;">Team</span>
+            <div class="editorial-line"></div>
+          </a>
+
+          <a href="work.html" class="menu-item-container"
+            style="text-decoration: none; position: relative; padding: 25px 0; display: flex; align-items: baseline;">
+            <span class="editorial-number" style="font-size: 12px; margin-right: 15px;">04</span>
+            <span class="editorial-text"
+              style="color: #ffffff; font-size: 42px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.02em;">Work</span>
+            <div class="editorial-line"></div>
+          </a>
+
+          <a href="contact.html" class="menu-item-container"
+            style="text-decoration: none; position: relative; padding: 25px 0; display: flex; align-items: baseline;">
+            <span class="editorial-number" style="font-size: 12px; margin-right: 15px;">05</span>
+            <span class="editorial-text"
+              style="color: #ffffff; font-size: 42px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.02em;">Contact</span>
+            <div class="editorial-line"></div>
+          </a>
+
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Enhanced Cinematic Menu JavaScript
+    document.addEventListener('DOMContentLoaded', function () {
+      // ===== MENU TOGGLE WITH CINEMATIC ANIMATIONS =====
+      const menuToggle = document.getElementById('menu-toggle');
+      const menuClose = document.getElementById('menuClose');
+      const menuCloseMobile = document.querySelector('.menu-close-mobile');
+      const menuOverlay = document.getElementById('menu-overlay');
+      const desktopMenu = document.querySelector('.desktop-menu');
+      const mobileMenu = document.querySelector('.mobile-menu');
+
+      function showMenu() {
+        menuOverlay.style.display = 'block';
+        menuOverlay.classList.add('entering');
+        menuOverlay.classList.remove('exiting');
+
+        if (window.innerWidth > 768) {
+          desktopMenu.style.display = 'block';
+          mobileMenu.style.display = 'none';
+        } else {
+          desktopMenu.style.display = 'none';
+          mobileMenu.style.display = 'block';
+        }
+
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+      }
+
+      function hideMenu() {
+        menuOverlay.classList.add('exiting');
+        menuOverlay.classList.remove('entering');
+
+        setTimeout(() => {
+          menuOverlay.style.display = 'none';
+          document.body.style.overflow = '';
+        }, 600);
+      }
+
+      if (menuToggle) menuToggle.addEventListener('click', showMenu);
+      if (menuClose) menuClose.addEventListener('click', hideMenu);
+      if (menuCloseMobile) menuCloseMobile.addEventListener('click', hideMenu);
+
+      // Close menu on escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && menuOverlay.style.display === 'block') {
+          hideMenu();
+        }
+      });
+
+      // ===== LIVE TIME UPDATE =====
+      function updateTime() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const timeElement = document.getElementById('lux-time');
+        if (timeElement) {
+          timeElement.textContent = `INR ${hours}:${minutes}:${seconds} GMT +5:30`;
+        }
+      }
+
+      updateTime();
+      setInterval(updateTime, 1000);
+    });
+  </script>
+
+  <!-- Scripts -->
+</body>
+
+</html>
