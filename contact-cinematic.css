@@ -42,6 +42,13 @@ body {
     pointer-events: none;
 }
 
+.cinematic-bg canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: 0.8;
+}
+
 .cinematic-bg::before {
     content: '';
     position: absolute;
