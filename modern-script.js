@@ -404,15 +404,7 @@ if (particleCanvas) {
 }
 
 // GSAP Animations
-// Hero Title Reveal
-gsap.from('.hero-title .title-line', {
-  y: 100,
-  opacity: 0,
-  duration: 1.2,
-  stagger: 0.2,
-  ease: 'power4.out',
-  delay: 0.5
-});
+// Hero Title Reveal - Moved to initHeroReveal
 
 // ---------------------------------------------
 // Services Wave Slider Animation
@@ -963,15 +955,36 @@ if (ctaCard) {
 // Cinematic Preloader
 // Cinematic Preloader - REMOVED
 function initHeroReveal() {
-  // Trigger hero reveal immediately
-  gsap.from('.hero-title .title-line', {
+  const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+
+  // 1. Title Lines
+  tl.from('.hero-title .title-line', {
     y: 100,
     opacity: 0,
     duration: 1.2,
-    stagger: 0.2,
-    ease: 'power4.out',
-    delay: 0.5
+    stagger: 0.2
   });
+
+  // 2. Subtitle
+  tl.from('.hero-subtitle', {
+    y: 30,
+    opacity: 0,
+    duration: 1
+  }, "-=0.8");
+
+  // 3. CTA Buttons
+  tl.from('.hero-cta', {
+    y: 20,
+    opacity: 0,
+    duration: 0.8
+  }, "-=0.6");
+
+  // 4. Hero Visual (Cards)
+  tl.from('.hero-visual', {
+    x: 50,
+    opacity: 0,
+    duration: 1.2
+  }, "-=1.0");
 }
 
 
