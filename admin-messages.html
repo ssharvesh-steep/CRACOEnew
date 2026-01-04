@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>CRACOE - Message Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="contact-storage.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .message-card {
+      transition: all 0.3s ease;
+    }
+
+    .message-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .unread {
+      border-left: 4px solid #3b82f6;
+    }
+
+    .read {
+      border-left: 4px solid #10b981;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+  <div class="container mx-auto px-4 py-8">
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold text-gray-900 mb-2">Message Dashboard</h1>
+      <div class="flex items-center gap-4">
+        <div id="connection-status" class="px-3 py-1 rounded-full text-sm">
+          <span id="status-dot" class="inline-block w-2 h-2 rounded-full mr-2"></span>
+          <span id="status-text">Connecting...</span>
+        </div>
+        <div class="text-sm text-gray-600">
+          Total Messages: <span id="message-count" class="font-semibold">0</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <!-- Stats Cards -->
+      <div class="bg-white p-6 rounded-lg shadow">
+        <h3 class="text-sm font-medium text-gray-500">Unread</h3>
+        <p id="unread-count" class="text-2xl font-bold text-blue-600">0</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow">
+        <h3 class="text-sm font-medium text-gray-500">Today</h3>
+        <p id="today-count" class="text-2xl font-bold text-green-600">0</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow">
+        <h3 class="text-sm font-medium text-gray-500">This Week</h3>
+        <p id="week-count" class="text-2xl font-bold text-purple-600">0</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow">
+        <h3 class="text-sm font-medium text-gray-500">Online Devices</h3>
+        <p id="device-count" class="text-2xl font-bold text-orange-600">1</p>
+      </div>
+    </div>
+
+    <!-- Messages List -->
+    <div class="mt-8">
+      <div class="bg-white rounded-lg shadow overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-200">
+          <h2 class="text-lg font-semibold text-gray-900">Recent Messages</h2>
+        </div>
+        <div id="messages-container" class="divide-y divide-gray-200">
+          <!-- Messages will be loaded here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Message Detail Modal -->
+  <div id="message-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+    <div class="flex items-center justify-center min-h-screen p-4">
+      <div class="bg-white rounded-lg max-w-2xl w-full max-h-96 overflow-y-auto">
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-lg font-semibold" id="modal-title">Message Details</h3>
+            <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+          <div id="modal-content"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    class MessageDashboard {
+      constructor() {
+        this.storage = new ContactStorage();
+        this.socket = null;
+        this.messages = [];
+        this.init();
+      }
+
+      init() {
+        this.connectToGlobalNetwork();
+        this.loadMessages();
+        this.setupEventListeners();
+        this.startPeriodicRefresh();
+      }
+
+      connectToGlobalNetwork() {
+        try {
+          this.socket = io('wss://cracoe-global.herokuapp.com');
+
+          this.socket.on('connect', () => {
+            this.updateConnectionStatus('Connected Globally', 'success');
+            this.socket.emit('join_admin');
+          });
+
+          this.socket.on('message', (message) => {
+            this.addNewMessage(message);
+            this.showNotification(`New message from ${message.name}`);
+          });
+
+          this.socket.on('disconnect', () => {
+            this.updateConnectionStatus('Disconnected', 'error');
+          });
+
+        } catch (error) {
+          this.updateConnectionStatus('Local Mode', 'warning');
+          this.setupLocalPolling();
+        }
+      }
+
+      setupLocalPolling() {
+        setInterval(() => {
+          const messages = JSON.parse(localStorage.getItem('cracoe_messages') || '[]');
+          const newMessages = messages.filter(m => !this.messages.find(existing => existing.id === m.id));
+          newMessages.forEach(msg => this.addNewMessage(msg));
+        }, 2000);
+      }
+
+      async loadMessages() {
+        try {
+          const localMessages = JSON.parse(localStorage.getItem('cracoe_messages') || '[]');
+          this.messages = localMessages;
+          this.renderMessages();
+          this.updateStats();
+        } catch (error) {
+          console.error('Failed to load messages:', error);
+        }
+      }
+
+      renderMessages() {
+        const container = document.getElementById('messages-container');
+
+        if (this.messages.length === 0) {
+          container.innerHTML = `
+            <div class="p-8 text-center text-gray-500">
+              <p>No messages yet. Waiting for global submissions...</p>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = this.messages
+          .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+          .map(message => this.createMessageCard(message))
+          .join('');
+      }
+
+      createMessageCard(message) {
+        const isUnread = message.status !== 'read';
+        const timeAgo = this.getTimeAgo(message.timestamp);
+
+        return `
+          <div class="message-card p-6 hover:bg-gray-50 cursor-pointer ${isUnread ? 'unread' : 'read'}" 
+               onclick="showMessageDetail('${message.id}')">
+            <div class="flex justify-between items-start">
+              <div class="flex-1">
+                <div class="flex items-center gap-3 mb-2">
+                  <h3 class="font-semibold text-gray-900">${message.name}</h3>
+                  <span class="text-sm text-gray-500">${message.email}</span>
+                  ${isUnread ? '<span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">New</span>' : ''}
+                </div>
+                <p class="text-gray-600 text-sm mb-2">${message.message.substring(0, 100)}...</p>
+                <div class="flex items-center gap-4 text-xs text-gray-500">
+                  <span>${timeAgo}</span>
+                  ${message.phone ? `<span>📞 ${message.phone}</span>` : ''}
+                  ${message.company ? `<span>🏢 ${message.company}</span>` : ''}
+                  ${message.deviceId ? `<span>📱 ${message.deviceId.substring(0, 12)}...</span>` : ''}
+                </div>
+              </div>
+              <div class="ml-4">
+                <button onclick="markAsRead('${message.id}'); event.stopPropagation();" 
+                        class="text-sm text-blue-600 hover:text-blue-800">
+                  ${isUnread ? 'Mark Read' : 'Read'}
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      addNewMessage(message) {
+        this.messages.unshift(message);
+        this.renderMessages();
+        this.updateStats();
+      }
+
+      updateStats() {
+        const unreadCount = this.messages.filter(m => m.status !== 'read').length;
+        const today = new Date().toDateString();
+        const todayCount = this.messages.filter(m =>
+          new Date(m.timestamp).toDateString() === today
+        ).length;
+
+        const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+        const weekCount = this.messages.filter(m =>
+          new Date(m.timestamp) > weekAgo
+        ).length;
+
+        document.getElementById('message-count').textContent = this.messages.length;
+        document.getElementById('unread-count').textContent = unreadCount;
+        document.getElementById('today-count').textContent = todayCount;
+        document.getElementById('week-count').textContent = weekCount;
+      }
+
+      updateConnectionStatus(status, type) {
+        const statusEl = document.getElementById('connection-status');
+        const dotEl = document.getElementById('status-dot');
+        const textEl = document.getElementById('status-text');
+
+        const colors = {
+          success: { bg: 'bg-green-100 text-green-800', dot: 'bg-green-500' },
+          error: { bg: 'bg-red-100 text-red-800', dot: 'bg-red-500' },
+          warning: { bg: 'bg-yellow-100 text-yellow-800', dot: 'bg-yellow-500' }
+        };
+
+        statusEl.className = `px-3 py-1 rounded-full text-sm ${colors[type].bg}`;
+        dotEl.className = `inline-block w-2 h-2 rounded-full mr-2 ${colors[type].dot}`;
+        textEl.textContent = status;
+      }
+
+      showNotification(message) {
+        if ('Notification' in window && Notification.permission === 'granted') {
+          new Notification('CRACOE - New Message', {
+            body: message,
+            icon: '/cracoe-logo.png'
+          });
+        }
+      }
+
+      getTimeAgo(timestamp) {
+        const now = new Date();
+        const time = new Date(timestamp);
+        const diff = now - time;
+
+        const minutes = Math.floor(diff / 60000);
+        const hours = Math.floor(diff / 3600000);
+        const days = Math.floor(diff / 86400000);
+
+        if (minutes < 1) return 'Just now';
+        if (minutes < 60) return `${minutes}m ago`;
+        if (hours < 24) return `${hours}h ago`;
+        return `${days}d ago`;
+      }
+
+      setupEventListeners() {
+        // Request notification permission
+        if ('Notification' in window && Notification.permission === 'default') {
+          Notification.requestPermission();
+        }
+
+        // Listen for localStorage changes (same device)
+        window.addEventListener('storage', (e) => {
+          if (e.key === 'cracoe_messages') {
+            this.loadMessages();
+          }
+        });
+      }
+
+      startPeriodicRefresh() {
+        setInterval(() => {
+          this.loadMessages();
+        }, 30000); // Refresh every 30 seconds
+      }
+    }
+
+    // Global functions
+    function showMessageDetail(messageId) {
+      const message = dashboard.messages.find(m => m.id == messageId);
+      if (!message) return;
+
+      document.getElementById('modal-title').textContent = `Message from ${message.name}`;
+      document.getElementById('modal-content').innerHTML = `
+        <div class="space-y-4">
+          <div><strong>Email:</strong> ${message.email}</div>
+          ${message.phone ? `<div><strong>Phone:</strong> ${message.phone}</div>` : ''}
+          ${message.company ? `<div><strong>Company:</strong> ${message.company}</div>` : ''}
+          <div><strong>Received:</strong> ${new Date(message.timestamp).toLocaleString()}</div>
+          <div><strong>Message:</strong></div>
+          <div class="bg-gray-50 p-4 rounded-lg">${message.message}</div>
+        </div>
+      `;
+
+      document.getElementById('message-modal').classList.remove('hidden');
+
+      // Mark as read when opened
+      if (message.status !== 'read') {
+        markAsRead(messageId);
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('message-modal').classList.add('hidden');
+    }
+
+    async function markAsRead(messageId) {
+      try {
+        await dashboard.storage.markAsRead(messageId);
+        const message = dashboard.messages.find(m => m.id == messageId);
+        if (message) {
+          message.status = 'read';
+          dashboard.renderMessages();
+          dashboard.updateStats();
+        }
+      } catch (error) {
+        console.error('Failed to mark as read:', error);
+      }
+    }
+
+    // Initialize dashboard
+    let dashboard;
+    document.addEventListener('DOMContentLoaded', () => {
+      dashboard = new MessageDashboard();
+    });
+  </script>
+</body>
+
+</html>
