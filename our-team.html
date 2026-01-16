@@ -669,7 +669,7 @@
 			setInterval(updateTime, 1000);
 			updateTime();
 
-			// Menu functionality
+			// ===== ENHANCED CINEMATIC MENU LOGIC =====
 			const menuOpen = document.getElementById('menu-open');
 			const menuClose = document.getElementById('menuClose');
 			const menuCloseMobile = document.querySelector('.menu-close-mobile');
@@ -679,6 +679,8 @@
 
 			function showMenu() {
 				menuOverlay.style.display = 'block';
+				menuOverlay.classList.add('entering');
+				menuOverlay.classList.remove('exiting');
 
 				if (window.innerWidth > 768) {
 					desktopMenu.style.display = 'block';
@@ -687,29 +689,39 @@
 					desktopMenu.style.display = 'none';
 					mobileMenu.style.display = 'block';
 				}
+				document.body.style.overflow = 'hidden';
 			}
 
 			function hideMenu() {
-				menuOverlay.style.display = 'none';
-				desktopMenu.style.display = 'none';
-				mobileMenu.style.display = 'none';
+				menuOverlay.classList.add('exiting');
+				menuOverlay.classList.remove('entering');
+
+				setTimeout(() => {
+					menuOverlay.style.display = 'none';
+					document.body.style.overflow = '';
+				}, 600);
 			}
 
-			if (menuOpen) {
-				menuOpen.addEventListener('click', showMenu);
-			}
+			if (menuOpen) menuOpen.addEventListener('click', showMenu);
+			if (menuClose) menuClose.addEventListener('click', hideMenu);
+			if (menuCloseMobile) menuCloseMobile.addEventListener('click', hideMenu);
 
-			if (menuClose) {
-				menuClose.addEventListener('click', hideMenu);
-			}
-
-			if (menuCloseMobile) {
-				menuCloseMobile.addEventListener('click', hideMenu);
-			}
+			// Close menu on escape key
+			document.addEventListener('keydown', (e) => {
+				if (e.key === 'Escape' && menuOverlay.style.display === 'block') {
+					hideMenu();
+				}
+			});
 
 			window.addEventListener('resize', function () {
 				if (menuOverlay.style.display === 'block') {
-					showMenu();
+					if (window.innerWidth > 768) {
+						desktopMenu.style.display = 'block';
+						mobileMenu.style.display = 'none';
+					} else {
+						desktopMenu.style.display = 'none';
+						mobileMenu.style.display = 'block';
+					}
 				}
 			});
 		});
